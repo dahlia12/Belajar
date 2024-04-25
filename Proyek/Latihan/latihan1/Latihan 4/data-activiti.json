@@ -1,0 +1,42 @@
+{
+    "data":[{
+        "id":1,
+        "category":"DEVELOPMENT",
+        "name":"Web Development",
+        "description":"Some Description",
+        "actions":"1. Build template dengan HTML, CSS, dan Javascript",
+        "status": "INPROGRESS",
+        "started_at":"2024-01-01",
+        "ended_at": ""
+    },
+    {
+        "id":1,
+        "category":"BUG",
+        "name":"Bug Fixing",
+        "description":"Some Description",
+        "actions":"1. Build template dengan HTML, CSS, dan Javascript",
+        "status": "INPROGRESS",
+        "started_at":"2024-01-01",
+        "ended_at": ""
+    },
+    {
+        "id":1,
+        "category":"IMPROVEMENT",
+        "name":"Feature Makan makanan",
+        "description":"Some Description",
+        "actions":"1. Build template dengan HTML, CSS, dan Javascript",
+        "status": "DONE",
+        "started_at":"2024-01-01",
+        "ended_at": "2024-01-16"
+    }, 
+    {
+        "id":1,
+        "category":"REFACTOR",
+        "name":"Refactor Code",
+        "description":"Some Description",
+        "actions":"1. Build template dengan HTML, CSS, dan Javascript",
+        "status": "DONE",
+        "started_at":"2024-01-01",
+        "ended_at": ""
+    }]
+}
