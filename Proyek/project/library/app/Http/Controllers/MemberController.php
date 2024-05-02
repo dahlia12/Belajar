@@ -68,7 +68,7 @@ class MemberController extends Controller
 
         // member::create('$request->all()');
         
-        // return redirect('member');
+        return redirect('members');
     
     }
 
@@ -120,7 +120,7 @@ class MemberController extends Controller
 
         $member->update( $request->all());
         
-        return redirect('member');
+        return redirect('members');
     }
 
     /**
@@ -133,6 +133,6 @@ class MemberController extends Controller
     {
         $member->delete();
 
-        return redirect('member');
+        return redirect('members');
     }
 }

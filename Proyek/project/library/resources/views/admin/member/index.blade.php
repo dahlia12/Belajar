@@ -23,7 +23,7 @@ ini adalah halaman Member
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
-                    <th>Num</th>
+                    <th>Number</th>
                     <th>ID Member</th>
                     <th>Name</th>
                     <th>Username</th>

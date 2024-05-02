@@ -27,17 +27,17 @@ class BookController extends Controller
         // $authors = Author::get();
         // $catalogs = Catalog ::get();
 
-        $publishers = Publisher::all();
-        $authors = Author::all();
-        $catalogs = Catalog::all();
+            $publishers = Publisher::all();
+            $authors = Author::all();
+            $catalogs = Catalog::all();
 
-        // return view('admin.book', Create('publishers', 'authors', 'catalogs'));
+            return view('admin.book', compact('publishers', 'authors', 'catalogs'));
 
-        return view("admin.book.create",[
-        "publishers" => $publishers,
-        "authors" => $authors,
-        "catalogs" => $catalogs,
-        ]);
+        // return view("admin.book",[
+        // "publishers" => $publishers,
+        // "authors" => $authors,
+        // "catalogs" => $catalogs,
+        // ]);
     }
     
     public function api()

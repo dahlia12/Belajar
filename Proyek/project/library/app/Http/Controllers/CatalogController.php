@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Catalog;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\View\View as ViewView;
 
 class CatalogController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -19,14 +18,32 @@ class CatalogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {    
+    {
         
-        $catalogs = Catalog::with('books')->get();
+        $catalogs = Catalog::all();
 
-        //return $catalogs;
-        return view('admin.catalog.index', compact('catalogs'));
+        //return $Catalogs;
+        return view('admin.catalog', compact('catalogs'));
+
+
     }
+    
+    public function api()
+    {
+        $catalogs = Catalog :: all();
 
+        // foreach ($Catalogs as $key => $Catalog){
+        //     $Catalog->date = convert_date($Catalog->created_at);
+
+        // }
+
+        $datables = datatables()->of($catalogs)
+                                ->addIndexColumn('date',function($catalog){
+                                    return convert_date($catalog->created_at);
+                                })->addIndexColumn();
+
+        return $datables ->make(true);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -45,19 +62,19 @@ class CatalogController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
         $this->validate($request,[
             'id_catalog'  =>['required'],
             'name'  =>['required'],
         ]);
-        // $catalog = new Catalog;
-        // $catalog ->id_catalog =$request ->id_catalog;
-        // $catalog ->name = $request ->name;
-        // $catalog->save();
+        // $Catalog = new Catalog;
+        // $Catalog ->id_Catalog =$request ->id_Catalog;
+        // $Catalog ->name = $request ->name;
+        // // $Catalog->save();
 
         Catalog::create('$request->all()');
         
-        return redirect('catalog');
-        
+        return redirect('catalogs');
     }
 
     /**
@@ -78,13 +95,15 @@ class CatalogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    { 
-        $catalog = Catalog::select('*')
-        ->where('id', $id)
-        ->first();
-        dd($catalog);
+    {
+        $catalog= Catalog::where('id',$id)->first();
 
-        return view('admin.catalog.edit', compact('catalog'));
+            // $Catalog = Catalog::select('*')
+            // ->where('id', $id)
+            // ->first();
+        return view('admin.catalog.edit',compact('catalogs'));
+
+        //return view('admin.Catalog.edit',compact('Catalog'));
     }
 
     /**
@@ -101,7 +120,7 @@ class CatalogController extends Controller
             'name'  =>['required'],
         ]);
 
-        $catalog->update($request->all());
+        $catalog->update( $request->all());
         
         return redirect('catalog');
     }
@@ -116,6 +135,6 @@ class CatalogController extends Controller
     {
         $catalog->delete();
 
-        return redirect('catalog');
+        return redirect('catalogs');
     }
 }

@@ -62,8 +62,8 @@
                         <div class="form-group">
                             <label>Publisher</label>
                             <select name="publisher_id" class="form-control" required="required">
-                                @foreach($publisher as $publishers)
-                            <option :selected="book.publisher.id == {{$publisher.id}}" value="{{$publisher->id}}">{{$publisher->name}}</option>
+                                @foreach($publishers as $publisher)
+                                    <option :selected ="book.publisher_id == {{$publisher->id}}" value="{{$publisher->id}}">{{$publisher->name}}</option>
                                 @endforeach
                             </select>  
                         </div>
@@ -71,8 +71,8 @@
                         <div class="form-group">
                             <label>Author</label>
                             <select name="author_id" class="form-control" required="required">
-                                @foreach($author as $authors)
-                            <option :selected="book.author.id == {{$author.id}}" value="{{$author->id}}">{{$author->name}}</option>
+                                @foreach($authors as $author)
+                            <option :selected ="book.author_id == {{$author->id}}" value="{{$author->id}}">{{$author->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,8 +80,8 @@
                         <div class="form-group">
                             <label>Catalog</label>
                             <select name="catalog_id" class="form-control" required="required">
-                                @foreach($catalog as $catalogs)
-                            <option :selected="book.catalog.id == {{$catalog.id}}" value="{{$catalog->id}}">{{$catalog->name}}</option>
+                                @foreach($catalogs as $catalog)
+                            <option :selected ="book.catalog_id == {{$catalog->id}}" value="{{$catalog->id}}">{{$catalog->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -97,7 +97,7 @@
                         </div>
 
                         <div class="modal-fotter" justify-content-between>
-                            <button type="button" class="btn btn-default bg-danger v-if="editStatus" v-on:click="deteleData(book.id)">Delete</button>
+                            <button type="button" class="btn btn-default bg-danger" v-if="editStatus" v-on:click="deteleData(book.id)">Delete</button>
                             <button type="button" class="btn btn-default bg-primary">Save changes</button>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
 
                 },
                 deleteData(id){
-
+                    console.log(id);
                 },
                 formatMoney(n) {
                     return "Rp." + (Math.round(n * 100) / 100).toLocaleString();

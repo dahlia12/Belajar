@@ -63,9 +63,9 @@ class TransactionController extends Controller
         // // $transaction ->name = $request ->name;
         // // $transaction->save();
 
-        // transaction::create('$request->all()');
+        transaction::create('$request->all()');
         
-        // return redirect('transaction');
+        return redirect('transaction');
     
     }
 
@@ -92,7 +92,7 @@ class TransactionController extends Controller
         ->where('id', $id)
         ->first();
 
-        return view('admin.transaction.edit', compact('transaction'));
+        return view('admin.transaction.edit', compact('transactions'));
     }
 
     /**
@@ -114,7 +114,7 @@ class TransactionController extends Controller
 
         $transaction->update( $request->all());
         
-        return redirect('transaction');
+        return redirect('transactions');
     }
 
     /**
@@ -127,6 +127,6 @@ class TransactionController extends Controller
     {
         $transaction->delete();
 
-        return redirect('transaction');
+        return redirect('transactions');
     }
 }

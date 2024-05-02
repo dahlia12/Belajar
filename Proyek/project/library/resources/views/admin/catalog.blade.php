@@ -21,15 +21,15 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="#" @click ="addData()" data-target ="#modal-default" data-toggle="modal" class="btn btn-sm btn-primary pull-right">Create New Catalog</a>
+                    <a href="#" @click ="addData()" data-target ="#modal-default" data-toggle="modal" class="btn btn-sm btn-primary pull-right">Create New catalog</a>
                 </div>
                 <div class="card-body" >
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th witdh="30px"></th>
-                                <th class="text-center">ID catalog</th>
-                                <th class="text-center">Name</th>
+                                <th class="text-center">ID Catalog</th>
+                                <th class="text-center">Nama</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -44,10 +44,10 @@
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
-        <form method="post" :action="actionUrl" autocomplete="off" @submit="submitForm($event, data.id)">
+                <form method="post" :action="actionUrl" autocomplete="off" @submit="submitForm($event, data.id)">
                     <div class="modal-header">
 
-                        <h4 class="modal-title">Catalog</h4>
+                        <h4 class="modal-title">catalog</h4>
 
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -60,7 +60,7 @@
                         <input type="hidden" name="_method" value="PUT" v-if="editStatus">
 
                         <div class="form-group">
-                            <label>ID catalog</label>
+                            <label>ID Catalog</label>
                             <input type="text" class="form-control" name="id_catalog" :value="data.id_catalog" required="">
                         </div>
                         <div class="form-group">

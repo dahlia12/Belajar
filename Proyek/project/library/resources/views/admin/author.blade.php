@@ -28,12 +28,11 @@
                         <thead>
                             <tr>
                                 <th witdh="30px"></th>
-                                <th class="text-center">ID Author</th>
-                                <th class="text-center">Name</th>
+                                <th class="text-center">ID author</th>
+                                <th class="text-center">Nama</th>
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Phone Number</th>
                                 <th class="text-center">Alamat</th>
-                                <th class="text-center">Created At</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -122,7 +121,7 @@
             {data: 'email', class: 'text-center', orderable: true},
             {data: 'phone_number', class: 'text-center', orderable: false},
             {data: 'address', class: 'text-center', orderable: true},
-            {data: 'date', class: 'text-center', orderable: true},
+
             {render: function (index, row, data, meta) {
                 return`
                 <a href ="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, ${meta.row})">

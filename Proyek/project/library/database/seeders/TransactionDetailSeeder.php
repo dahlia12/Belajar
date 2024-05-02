@@ -20,14 +20,14 @@ class TransactionDetailSeeder extends Seeder
         $faker = Faker::create();
         
         for ($i = 0 ; $i < 50 ; $i++) {
-            $trasaction = new TransactionDetail;
+            $trasactiondetail = new TransactionDetail;
             
-            $trasaction->id_DTransaction ='DTSC'.$faker ->randomNumber(6,false);
-            $trasaction->transaction_id =rand(1,50);
-            $trasaction->book_id = rand(1,20);
-            $trasaction->qty=rand(10,20);
+            $trasactiondetail->id_DTransaction ='DTSC'.$faker ->randomNumber(6,false);
+            $trasactiondetail->transactiondetail_id =rand(1,50);
+            $trasactiondetail->book_id = rand(1,20);
+            $trasactiondetail->qty=rand(10,20);
             
-            $trasaction->save();
+            $trasactiondetail->save();
         }
     }
 }

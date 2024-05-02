@@ -19,21 +19,26 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('/home', App\Http\Controllers\HomeController::class);
+Route::resource('/books', App\Http\Controllers\BookController::class);
+Route::resource('/authors', App\Http\Controllers\AuthorController::class);
+Route::resource('/publishers', App\Http\Controllers\PublisherController::class);
+Route::resource('/catalogs', App\Http\Controllers\CatalogController::class);
+Route::resource('/taransactions', App\Http\Controllers\TransactionController::class);
+Route::resource('/transactiondetails', App\Http\Controllers\TransactionDetailController::class);
+Route::resource('/members', App\Http\Controllers\MemberController::class);
 
-Route::resource('/books',App\Http\Controllers\BookController::class);
-Route::resource('/authors',App\Http\Controllers\AuthorController::class);
-Route::resource('/publishers',App\Http\Controllers\PublisherController::class);
-Route::resource('/catalogs',App\Http\Controllers\CatalogController::class);
-Route::resource('/taransactions',App\Http\Controllers\TransactionController::class);
-Route::resource('/transactiondetails',App\Http\Controllers\TransactionDetailController::class);
-Route::resource('/members',App\Http\Controllers\MemberController::class);
 
+Route::get('/api/home',[App\Http\Controllers\BookController::class, 'api']);
 Route::get('/api/books',[App\Http\Controllers\BookController::class, 'api']);
 Route::get('/api/authors',[App\Http\Controllers\AuthorController::class, 'api']);
 Route::get('/api/publishers',[App\Http\Controllers\PublisherController::class, 'api']);
+Route::get('/api/taransactions',[App\Http\Controllers\TransactionController::class,'api']);
+Route::get('/api/taransactionDetails',[App\Http\Controllers\TransactionDetailController::class,'api']);
 Route::get('/api/members',[App\Http\Controllers\MemberController::class, 'api']);
 
+
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Route::get('/authors', [App\Http\Controllers\AuthorController::class, 'index'])->name('authors');
 // Route::get('/authors/create', [App\Http\Controllers\AuthorController::class, 'create']);

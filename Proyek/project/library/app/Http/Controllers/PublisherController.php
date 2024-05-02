@@ -63,9 +63,9 @@ class PublisherController extends Controller
         // // $publisher ->name = $request ->name;
         // // $publisher->save();
 
-        // Publisher::create('$request->all()');
+        Publisher::create('$request->all()');
         
-        // return redirect('publisher');
+        return redirect('publisher');
     
     }
 
@@ -92,7 +92,7 @@ class PublisherController extends Controller
         ->where('id', $id)
         ->first();
 
-        return view('admin.publisher.edit', compact('publisher'));
+        return view('admin.publisher.edit', compact('publishers'));
     }
 
     /**
@@ -114,7 +114,7 @@ class PublisherController extends Controller
 
         $publisher->update( $request->all());
         
-        return redirect('publisher');
+        return redirect('publishers');
     }
 
     /**
@@ -127,6 +127,6 @@ class PublisherController extends Controller
     {
         $publisher->delete();
 
-        return redirect('publisher');
+        return redirect('publishers');
     }
 }
