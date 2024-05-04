@@ -128,6 +128,17 @@
             },
             methods: {
                 get_books() {
+                   const _this=this;
+                   $.ajax({
+                            url:apiUrl,
+                            methods:'GET',
+                            success:function(data){
+                                _this.books=JSON.parse(data);
+                            },
+                            error:function(err){
+                                console.log(err);
+                            }
+                   });
                 }, 
                 addData () {
                     this.book = {};
@@ -149,6 +160,7 @@
             },
             computed:{
                 filteredList() {
+                   // console.log("data buku",this.books);
                     return this.books.filter(book => {
                         return book.title.toLowerCase().includes(this.search.toLowerCase())
                     })

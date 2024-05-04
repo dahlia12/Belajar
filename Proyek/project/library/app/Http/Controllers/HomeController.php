@@ -22,7 +22,7 @@ class HomeController extends Controller
         $total_publisher= Publisher::count();
 
         $data_donut = Book::select(DB::raw("COUNT(publisher_id) as total"))->groupBy('publisher_id')->orderBy('publisher_id','asc')->pluck('total');
-        $label_donut = Publisher::orderBy('publisher.id', 'asc')->join ('books','books.publisher_id','=','publishers.id')->groupBy('name')->
+        $label_donut = Publisher::orderBy('publishers.id', 'asc')->join('books','books.publisher_id','=','publishers.id')->groupBy('name','publishers.id')->
                         pluck('name');
 
         $label_bar = ['Transaction', 'Pengembalian'];
@@ -44,7 +44,7 @@ class HomeController extends Controller
             $data_bar[$key]['data'] =$data_month;
         }
         //return $data_bar;
-        return view('admin.home', compact('total_book', 'total_member', 'total_transaction', 'total_publisher','data_donut', 'label_donut'));
+        return view('home', compact('total_book', 'total_member', 'total_transaction', 'total_publisher','data_donut', 'label_donut','data_bar'));
 
     }
     public function Catalog()

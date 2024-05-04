@@ -73,7 +73,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
               </div>
             </div>
           </div>
@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div class="card-body">
-                  <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                  <canvas id="donutsChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
               </div>
             </div>
           </div>
@@ -101,10 +101,11 @@
         
     </div>
 
-  @endsection
 
-  <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-  <script src="{{ asset('assets/plugins/chart.js/Chart.min.js') }}"></script>
+  {{-- <script src="{{asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+  <script src="{{asset('assets/plugins/chart.js/Chart.min.js') }}"></script> --}}
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script type = "text/javascript">
 
@@ -120,6 +121,7 @@
     //-------------
 
       var donutChartCanvas = $('#donutsChart').get(0).getContext('2d')
+      console.log("donut",donutChartCanvas);
       var donutData = {
         labels: JSON.parse(label_donut),
           datasets: [
@@ -152,7 +154,7 @@
     }
 
         var barChartCanvas = $('#barChart').get(0).getContext('2d')
-        var barChartData = $.extend(true,{}, areChartData)
+        var barChartData = $.extend(true,{}, areaChartData)
         //var temp0 = areChartData.datasets[0]
         //var temp0 = areChartData.datasets[1]
         //barChartCanvas.datasets[0] = temp1
