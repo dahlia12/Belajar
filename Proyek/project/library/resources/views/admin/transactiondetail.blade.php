@@ -37,12 +37,13 @@
                         <thead>
                             <tr>
                                 <th witdh="30px"></th>
-                                <th class="text-center">ID Publisher</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-center">Phone Number</th>
-                                <th class="text-center">Alamat</th>
-                                <th class="text-right">Action</th>
+                                <th class="text-center">Tanggal Pinjam</th>
+                                <th class="text-center">Tanggal Kembali</th>
+                                <th class="text-center">Nama Peminjam</th>
+                                <th class="text-center">Lama Pinjam (hari)</th>
+                                <th class="text-center">Total Buku</th>
+                                <th class="text-right">Total Bayar</th>
+                                <th class="text-right">Status</th>
                             </tr>
                         </thead>
                     </table>

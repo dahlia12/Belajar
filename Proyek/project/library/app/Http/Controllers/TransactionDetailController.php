@@ -18,7 +18,15 @@ class TransactionDetailController extends Controller
         $transactiondetails = TransactionDetail::with('transaction')->get();
 
         //return $transactiondetails;
-        return view('admin.transactiondetail.index', compact('transactiondetails'));
+        return view('admin.transactiondetail', compact('transactiondetails'));
+    }
+
+    public function api()
+    {
+        $transactiondetail = TransactionDetail:: all();
+        $datables = datatables()->of($transactiondetail)->addIndexColumn();
+
+        return $datables ->make(true);
     }
 
     /**

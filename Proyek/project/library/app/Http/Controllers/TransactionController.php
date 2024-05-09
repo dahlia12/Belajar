@@ -19,18 +19,27 @@ class TransactionController extends Controller
     }
     public function index()
     {
-        $transactions = Transaction::all();
+        
 
         //return $transactions;
-        return view('admin.transaction', compact('transactions'));
+        return view('admin.transaction');
     }
 
     public function api()
     {
-        $transactions = transaction :: all();
-        $datables = datatables()->of($transactions)->addIndexColumn();
+        $transactions = Transaction :: with(['member', 'transactiondetail'])->get();
+        foreach ($transactions as $transaction) {
+            if($transaction -> transactiondetail -> book == null){
+                dd($transaction->transactiondetail);
+            }
+            $transaction["name"] = $transaction -> member -> name;
+            $transaction["lama"] = $transaction -> lama;
+            $transaction["qty"] = $transaction -> transactiondetail -> qty;
+            $transaction["total"] = $transaction -> transactiondetail -> book -> price;
+        }
+        $datatables = datatables()->of($transactions)->addIndexColoum();
 
-        return $datables ->make(true);
+        return $datatables ->make(true);
     }
 
     /**

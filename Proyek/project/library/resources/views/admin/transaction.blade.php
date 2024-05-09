@@ -1,11 +1,6 @@
 @extends('layouts.admin')
 @section('header','Transaction')
 
-@push('css')
-<style type="text/css">
-
-</style>
-@endpush
 
 @section('css')
     <!-- DataTables -->
@@ -17,26 +12,33 @@
 
 @section('content')
 <div id="controller">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <a href="#" @click ="addData()" data-target ="#modal-default" data-toggle="modal" class="btn btn-sm btn-primary pull-right">Create New Transaction</a>
+    <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <a href="#" @click ="addData()" class="btn btn-sm btn-primary pull-right">Create New Transaction</a>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-control" name="gender">
+                            <option value="0">Semua Jenis Kelamin</option>
+                            <option value="P">Perempuan</option>
+                            <option value="L">Laki-laki</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="card-body" >
+            </div>
+            <div class="card-body" >
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th witdh="30px"></th>
-                                <th class="text-center">ID Transaction</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Username</th>
-                                <th class="text-center">Password</th>
-                                <th class="text-center">Gender</th>
-                                <th class="text-center">Phone Number</th>
-                                <th class="text-center">Alamat</th>
-                                <th class="text-center">Email</th>
-                                <th class="text-right">Action</th>
+                                <th class="text-center">Tanggal Pinjam</th>
+                                <th class="text-center">Tanggal Kembali</th>
+                                <th class="text-center">Nama Peminjam</th>
+                                <th class="text-center">Lama Pinjam (hari)</th>
+                                <th class="text-center">Total Buku</th>
+                                <th class="text-right">Total Bayar</th>
+                                <th class="text-right">Status</th>
                             </tr>
                         </thead>
                     </table>
@@ -45,7 +47,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
@@ -133,14 +134,11 @@
 
         var columns = [
             {data: 'id', class: 'text-center', orderable: true},
-            {data: 'id_transaction', class: 'text-center', orderable: true},
+            {data: 'date_end', class: 'text-center', orderable: true},
             {data: 'name', class: 'text-center', orderable: true},
-            {data: 'username', class: 'text-center', orderable: true},
-            {data: 'password', class: 'text-center', orderable: true},
-            {data: 'gender', class: 'text-center', orderable: true},
-            {data: 'phone_number', class: 'text-center', orderable: false},
-            {data: 'address', class: 'text-center', orderable: true},
-            {data: 'email', class: 'text-center', orderable: true},
+            {data: 'lama', class: 'text-center', orderable: true},
+            {data: 'qty', class: 'text-center', orderable: true},
+            {data: 'total', class: 'text-center', orderable: true},
 
             {render: function (index, row, data, meta) {
                 return`
@@ -153,64 +151,63 @@
             }, orderable: false, width: '200px', class: 'text-center'},
         ];
 
-        // var controller = new Vue({
-        //     el:'#controller',
-        //     data:{
-        //         datas:[],
-        //         data : {},
-        //         actionUrl,
-        //         apiUrl,
-        //         editStatus:false,
+        var controller = new Vue({
+            el:'#controller',
+            data:{
+                datas:[],
+                data : {},
+                actionUrl,
+                apiUrl,
+                editStatus:false,
 
-        //     },
-        //     mounted: function () {
-        //         this.datatable();
-        //     },
-        //     methods:{
-        //         datatable() {
-        //             const _this = this;
-        //             _this.table = $('#datatable').DataTable({
-        //                 ajax: {
-        //                     url: _this.apiUrl,
-        //                     type:'GET',
-        //                 },
-        //                 columns:columns
-        //             }).on('xhr', function () {
-        //                 _this.datas = _this.table.ajax.json().data;
-        //             });
-        //         },
-        //         addData( ) {
-        //             this.data = {};
-        //             this.editStatus=false;
-        //             $('#modal-default').modal();
-        //         },
-        //         editData(event, row) {
-        //             this.data = this.datas[row];
-        //             consol.log(this.datas)
-        //             this.editStatus=true;
-        //             $('#modal-default').modal();
-        //         },
-        //         deleteData(event, id) {
-        //             if(confirm("Are you sure?")){
-        //                 // $(event.target).parents('tr').remove();
-        //                 axios.post(this.actionUrl+'/'+id, {_method:'DELETE'}).then(response => {
-        //                     alert('Data has been removed');
-        //                 });
-        //             }
-        //         },
-        //         SubmitForm(event, id){
-        //             event.preventDefault();
-        //             const _this = this;
-        //             var actionUrl = ! this.editStatus ? this.actionUrl : this.actionUrl+'/'+id;
-        //             axios.post(actionUrl, new FormData($(event.target)[0])).then(response => {
-        //                 $('#modal-default').modal('hide');
-        //                 _this.table.ajax.reload();
-        //             });
-        //         },
-        //     }
-        // });
+            },
+            mounted: function () {
+                this.datatable();
+            },
+                methods:{
+                    datatable() {
+                    const _this = this;
+                    _this.table = $('#datatable').DataTable({
+                        ajax: {
+                            url: _this.apiUrl,
+                            type:'GET',
+                        },
+                        columns:columns
+                    }).on('xhr', function () {
+                        _this.datas = _this.table.ajax.json().data;
+                        });
+                    },
+                addData( ) {
+                    this.data = {};
+                    this.editStatus=false;
+                    $('#modal-default').modal();
+                },
+                editData(event, row) {
+                    this.data = this.datas[row];
+                    this.editStatus=true;
+                    $('#modal-default').modal();
+                },
+                deleteData(event, id) {
+                    if(confirm("Are you sure?")){
+                        // $(event.target).parents('tr').remove();
+                        axios.post(this.actionUrl+'/'+id, {_method:'DELETE'}).then(response => {
+                            alert('Data has been removed');
+                        });
+                    }
+                },
+                SubmitForm(event, id){
+                    event.preventDefault();
+                    const _this = this;
+                    var actionUrl = ! this.editStatus ? this.actionUrl : this.actionUrl+'/'+id;
+                    axios.post(actionUrl, new FormData($(event.target)[0])).then(response => {
+                        $('#modal-default').modal('hide');
+                        _this.table.ajax.reload();
+                    });
+                },
+            }
+        });
     </script>
-    <script src="{{ asset('js/data.js') }}"></script>
+    <!-- <script src="{{ asset('js/data.js') }}"></script> -->
 
 @endsection
 

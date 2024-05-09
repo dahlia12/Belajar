@@ -12,10 +12,15 @@ class Transaction extends Model
 
     public function member()
     {
-        return $this->belongsTo('App\Models\Member','member_id');
+        return $this->belongsTo(Member::class);
+    }
+    public function getLamaAttribute(){
+        $end = date_create($this->date_end);
+        $start = date_create($this->date_start);
+        return date_diff($start,$end)->format("%R%a");
     }
     public function transactiondetails()
     {
-        return $this->hasMany('App\Models\Transactiondetail','transaction_id');
+        return $this->hasMany('App\Models\Transactiondetail','transaction_id')->with('book');
     }
 }

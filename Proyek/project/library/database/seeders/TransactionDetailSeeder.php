@@ -23,8 +23,8 @@ class TransactionDetailSeeder extends Seeder
             $trasactiondetail = new TransactionDetail;
             
             $trasactiondetail->id_DTransaction ='DTSC'.$faker ->randomNumber(6,false);
-            $trasactiondetail->transactiondetail_id =rand(1,50);
-            $trasactiondetail->book_id = rand(1,20);
+            $trasactiondetail->transactiondetail_id =Transaction::inRandomOrder()->first()->id;
+            $trasactiondetail->book_id = Book::inRandomOrder()->first()->id;
             $trasactiondetail->qty=rand(10,20);
             
             $trasactiondetail->save();

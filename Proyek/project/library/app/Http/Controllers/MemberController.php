@@ -13,16 +13,21 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
+    public function index(Request $request)
     {
-        $this->middleware('auth');
-    }
-    public function index()
-    {
-        $members = Member::all();
+        // if ($request->gender){
+        //     $datas = Member::where('gender',$request->gender)->get();
+        // }else{
+        //     $datas = Member::all();
+        // }
+        // $datatable = datatables()->of($datas)->addIndexColoumn();
 
-        //return $members;
-        return view('admin.member', compact('members'));
+        // return $datatable->make(true);
+        return view('admin.member',compact ('members'));
     }
 
     public function api()
