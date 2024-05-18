@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
+use App\Models\Member;
 use App\Models\Transaction;
+use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -27,15 +30,19 @@ class TransactionController extends Controller
 
     public function api()
     {
-        $transactions = Transaction :: with(['member', 'transactiondetail'])->get();
+        $transactions = Transaction :: with(['member', 'transactiondetails'])->get();
         foreach ($transactions as $transaction) {
             // if($transaction -> transactiondetail -> book == null){
             //     dd($transaction->transactiondetail);
             // }
             $transaction["name"] = $transaction -> member -> name;
             $transaction["lama"] = $transaction -> lama;
-            $transaction["qty"] = $transaction -> transactiondetail -> qty;
-            $transaction["total"] = $transaction -> transactiondetail -> book -> price;
+            $transaction["qty"] = $transaction -> transactiondetails ->sum('qty');
+            $transaction["total"]=0;
+            foreach($transaction -> transactiondetails as $detail){
+                $transaction["total"]+=$detail->book->price;
+            }
+            // $transaction["total"] = $transaction -> transactiondetails -> book -> sum('price');
         }
         $datatables = datatables()->of($transactions)->addIndexColumn();
 
@@ -49,7 +56,9 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('admin.transaction.create');
+        $members=Member::all();
+        $books=Book::all();
+        return view('admin.create',['members'=>$members,'books'=>$books]);
     }
 
     /**
@@ -61,21 +70,31 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'tanggal_pinjam'  =>['required'],
-            'tanggal_kembali'  =>['required'],
-            'nama'  =>['required'],
-            'hari'  =>['required'],
-            'total_buku'  =>['required'],
-            'total_bayar'  =>['required'],
+            'date_start'  =>['required'],
+            'date_end'  =>['required'],
+            'member_id'  =>['required'],
         ]);
+        $transaction=Transaction::create([
+            "member_id"=>request('member_id'),
+            "date_start"=>request('date_start'),
+            "date_end"=>request('date_end'),
+            "id_transaction"=>"X"
+        ]);
+
+        foreach(request('books') as $book_id){
+            TransactionDetail::create([
+                "transaction_id"=>$transaction->id,
+                "id_DTransaction"=>"X",
+                "book_id"=>$book_id,
+                "qty"=>1
+            ]);
+        }
         // // $transaction = new transaction;
         // // $transaction ->id_transaction =$request ->id_transaction;
         // // $transaction ->name = $request ->name;
         // // $transaction->save();
 
-        transaction::create('$request->all()');
-        
-        return redirect('transaction');
+        return redirect('transactions');
     
     }
 
@@ -98,11 +117,12 @@ class TransactionController extends Controller
      */
     public function edit($id)
     { 
-        $transaction = Transaction::select('*')
-        ->where('id', $id)
-        ->first();
+        //dd("hallo");
+        $transaction = Transaction::with('transactiondetails')->find($id);
+        $members=Member::all();
+        $books=Book::all();
 
-        return view('admin.edit', compact('transactions'));
+        return view('admin.edit', compact('transaction','members','books'));
     }
 
     /**

@@ -25,9 +25,9 @@
                     </div>
                     <div class="col-md-2">
                         <select class="form-control" name="gender">
-                            <option value="0">Semua Jenis Kelamin</option>
-                            <option value="P">Perempuan</option>
-                            <option value="L">Laki-laki</option>
+                            <option value="">Semua Jenis Kelamin</option>
+                            <option value="F">Perempuan</option>
+                            <option value="M">Laki-laki</option>
                         </select>
                     </div>
                 </div>
@@ -239,12 +239,11 @@
         <script type="text/javascript">
             $('select[name=gender]').on('change',function(){
                 gender = $('select[name=gender]').val();
-
-                if (gender == 0){
-                    controller.table.ajax.url(actionUrl).load();
+                if (gender == ""){
+                    controller.table.ajax.url(apiUrl).load();
                 }
                 else {
-                    controller.table.ajax.url(actionUrl+'?gender='+gender).load();
+                    controller.table.ajax.url(apiUrl+'?gender='+gender).load();
                 }
             });
         </script>

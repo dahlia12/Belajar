@@ -21,7 +21,7 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-8">
-                        <a href="#" @click ="addData()" class="btn btn-sm btn-primary pull-right">Create New Member</a>
+                        <a href="/transactions/create" class="btn btn-sm btn-primary pull-right">Create New Transaction</a>
                     </div>
                     <form>
                         <div class="form-group row  pull-right">
@@ -187,10 +187,10 @@
             {data: 'lama', class: 'text-center', orderable: true},
             {data: 'qty', class: 'text-center', orderable: true},
             {data: 'total', class: 'text-center', orderable: true},
-
+            {data: 'status', class: 'text-center', orderable: true},
             {render: function (index, row, data, meta) {
                 return`
-                <a href ="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, ${meta.row})">
+                <a href ="/transactions/${data.id}/edit" class="btn btn-warning btn-sm">
                     Edit
                 </a>
                 <a class ="btn btn-danger btn-sm" onclick="controller.deleteData(event, ${data.id})">

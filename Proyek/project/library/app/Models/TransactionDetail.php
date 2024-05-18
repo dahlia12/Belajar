@@ -9,7 +9,7 @@ class TransactionDetail extends Model
 {
     use HasFactory;
     protected $table = "transactiondetail";
-
+    protected $guarded=[];
     public function transaction()
     {
         return $this->belongsTo(Transaction::class);

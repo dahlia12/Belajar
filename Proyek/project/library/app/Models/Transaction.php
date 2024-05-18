@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $label = ['id_transaction','member_id','date_start','date_end'];
+    protected $fillable = ['id_transaction','member_id','date_start','date_end'];
 
     public function member()
     {
@@ -18,6 +18,10 @@ class Transaction extends Model
         $end = date_create($this->date_end);
         $start = date_create($this->date_start);
         return date_diff($start,$end)->format("%R%a");
+    }
+    public function getStatusAttribute($val){
+        
+        return $val==false?'Borrowed':'Finished';
     }
     public function transactiondetails()
     {

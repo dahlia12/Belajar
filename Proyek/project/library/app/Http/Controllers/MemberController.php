@@ -32,7 +32,12 @@ class MemberController extends Controller
 
     public function api()
     {
-        $members = Member :: all();
+        $gender=request('gender');
+        if($gender){
+            $members = Member::where('gender',$gender)->get();
+        }else{
+            $members = Member::all();
+        }
         $datables = datatables()->of($members)->addIndexColumn();
 
         return $datables ->make(true);

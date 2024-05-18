@@ -25,7 +25,7 @@ Route::resource('/authors', App\Http\Controllers\AuthorController::class);
 Route::resource('/publishers', App\Http\Controllers\PublisherController::class);
 Route::resource('/catalogs', App\Http\Controllers\CatalogController::class);
 Route::resource('/transactions', App\Http\Controllers\TransactionController::class);
-Route::resource('/transactiondetails', App\Http\Controllers\TransactionDetailController::class);
+// Route::resource('/transactiondetails', App\Http\Controllers\TransactionDetailController::class);
 Route::resource('/members', App\Http\Controllers\MemberController::class);
 
 

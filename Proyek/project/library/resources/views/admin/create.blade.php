@@ -15,7 +15,6 @@
 @endsection
 
 @section('content')
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -25,17 +24,16 @@
                 <div class="col-md-7">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Edit transaction</h3>
+                            <h3 class="card-title">Create New Transaction</h3>
                         </div>
-                        <form action="{{ url('transactions/'.$transaction->id) }}" method="post">
-                            @csrf
-                            {{ method_field('PUT') }}
-                            <div class="card-body">
+                        <div class="card-body">
+                            <form action="{{ url('transactions') }}" method="POST">
+                                @csrf
                                 <div class="form-group">
                                     <label>Member</label>
-                                    <select class="form-control" disabled name="member_id">
+                                    <select class="form-control" name="member_id">
                                         @foreach ($members as $member)
-                                        <option value="{{ $member->id }}" {{ $transaction->member_id === $member->id ? 'selected' : '' }}>{{ $member->name }}</option>
+                                        <option value="{{ $member->id }}">{{ $member->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -43,38 +41,26 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="date_start">Date start</label>
-                                            <input disabled type="date" id="tanggal" class="form-control" name="date_start" value="{{ $transaction->date_start }}">          
+                                            <input type="date" id="tanggal" class="form-control" name="date_start">          
                                         </div>
                                         <div class="col-md-6">
                                             <label for="date_start">Date end</label>
-                                            <input disabled type="date" id="tanggal" class="form-control" name="date_end" value="{{ $transaction->date_end }}">
+                                            <input type="date" id="tanggal" class="form-control" name="date_end">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Book</label>
-                                    <select class="select2" multiple="multiple" disabled     data-placeholder="Select a State" style="width: 100%;" name="book_id[]">
+                                    <select class="select2" multiple="multiple" data-placeholder="Select a State" style="width: 100%;" name="books[]">
                                         @foreach ($books as $book)
                                         <option value="{{ $book->id }}">{{ $book->title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group" v-if="editStatus">
-                                    <label for="status">Status</label>
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" value="Finished"  {{ $transaction->status === 'Finished' ? 'checked' : '' }}>
-                                    <label class="form-check-label">Finished</label>
-                                    </div>
-                                    <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" value="Borrowed" {{ $transaction->status === 'Borrowed' ? 'checked' : '' }}>
-                                    <label class="form-check-label">Borrowed</label>
-                                    </div>
-                                </div>
-                                
-                                <button class="btn btn-primary float-right" type="submit">Update</button>
-                            </div>
 
-                        </form>
+                                <button class="btn btn-primary float-right" type="submit">Save</button>
+                            </form>
+                        </div>
                     </div>
                 </div><!-- /.col -->
             </div><!-- /.row -->
