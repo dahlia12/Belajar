@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Catalog extends Model
 {
     use HasFactory;
-    protected $fillabel = ['id','id_catalog','name']; 
+    protected $fillabel = ['id_catalog','name']; 
 
     public function books()
     {

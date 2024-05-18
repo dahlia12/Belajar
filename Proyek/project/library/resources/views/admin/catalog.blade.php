@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('header','Catalog')
+@section('header','catalog')
 
 @push('css')
 <style type="text/css">
@@ -17,20 +17,28 @@
 
 @section('content')
 <div id="controller">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <a href="#" @click ="addData()" data-target ="#modal-default" data-toggle="modal" class="btn btn-sm btn-primary pull-right">Create New catalog</a>
+    <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <a href="#" @click ="addData()" class="btn btn-sm btn-primary pull-right">Create New catalog</a>
+                    </div>
+                    <!-- <div class="col-md-2">
+                        <select class="form-control" name="gender">
+                            <option value="0">Semua Jenis Kelamin</option>
+                            <option value="P">Perempuan</option>
+                            <option value="L">Laki-laki</option>
+                        </select>
+                    </div> -->
                 </div>
+            </div>
                 <div class="card-body" >
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th witdh="30px"></th>
                                 <th class="text-center">ID Catalog</th>
-                                <th class="text-center">Nama</th>
-                                <th class="text-right">Action</th>
+                                <th class="text-center">Name</th>
                             </tr>
                         </thead>
                     </table>
@@ -60,11 +68,11 @@
                         <input type="hidden" name="_method" value="PUT" v-if="editStatus">
 
                         <div class="form-group">
-                            <label>ID Catalog</label>
+                            <label>ID catalog</label>
                             <input type="text" class="form-control" name="id_catalog" :value="data.id_catalog" required="">
                         </div>
                         <div class="form-group">
-                            <label>Nama</label>
+                            <label>Name</label>
                             <input type="text" class="form-control" name="name" :value="data.name" required="">
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -120,82 +128,90 @@
         var apiUrl='{{url('api/catalogs')}}';
 
         var columns = [
-            {data: 'id', class: 'text-center', orderable: true},
+            {data: 'DT_RowIndex', class: 'text-center', orderable: true},
             {data: 'id_catalog', class: 'text-center', orderable: true},
             {data: 'name', class: 'text-center', orderable: true},
-            
             {render: function (index, row, data, meta) {
                 return`
                 <a href ="#" class="btn btn-warning btn-sm" onclick="controller.editData(event, ${meta.row})">
                     Edit
-                </a>
-                <a href ="#" class="btn btn-primary btn-sm" onclick="controller.editData(event, ${meta.row})">
-                    Print
                 </a>
                 <a class ="btn btn-danger btn-sm" onclick="controller.deleteData(event, ${data.id})">
                     Delete
                 </a>`;
             }, orderable: false, width: '200px', class: 'text-center'},
         ];
+        var controller = new Vue({
+            el:'#controller',
+            data:{
+                datas:[],
+                data : {},
+                actionUrl,
+                apiUrl,
+                editStatus:false,
 
-        // var controller = new Vue({
-        //     el:'#controller',
-        //     data:{
-        //         datas:[],
-        //         data : {},
-        //         actionUrl,
-        //         apiUrl,
-        //         editStatus:false,
-
-        //     },
-        //     mounted: function () {
-        //         this.datatable();
-        //     },
-        //     methods:{
-        //         datatable() {
-        //             const _this = this;
-        //             _this.table = $('#datatable').DataTable({
-        //                 ajax: {
-        //                     url: _this.apiUrl,
-        //                     type:'GET',
-        //                 },
-        //                 columns:columns
-        //             }).on('xhr', function () {
-        //                 _this.datas = _this.table.ajax.json().data;
-        //             });
-        //         },
-        //         addData( ) {
-        //             this.data = {};
-        //             this.editStatus=false;
-        //             $('#modal-default').modal();
-        //         },
-        //         editData(event, row) {
-        //             this.data = this.datas[row];
-        //             consol.log(this.datas)
-        //             this.editStatus=true;
-        //             $('#modal-default').modal();
-        //         },
-        //         deleteData(event, id) {
-        //             if(confirm("Are you sure?")){
-        //                 // $(event.target).parents('tr').remove();
-        //                 axios.post(this.actionUrl+'/'+id, {_method:'DELETE'}).then(response => {
-        //                     alert('Data has been removed');
-        //                 });
-        //             }
-        //         },
-        //         SubmitForm(event, id){
-        //             event.preventDefault();
-        //             const _this = this;
-        //             var actionUrl = ! this.editStatus ? this.actionUrl : this.actionUrl+'/'+id;
-        //             axios.post(actionUrl, new FormData($(event.target)[0])).then(response => {
-        //                 $('#modal-default').modal('hide');
-        //                 _this.table.ajax.reload();
-        //             });
-        //         },
-        //     }
-        // });
+            },
+            mounted: function () {
+                this.datatable();
+            },
+            methods:{
+                datatable() {
+                    const _this = this;
+                    _this.table = $('#datatable').DataTable({
+                        ajax: {
+                            url: _this.apiUrl,
+                            type:'GET',
+                        },
+                        columns:columns
+                    }).on('xhr', function () {
+                        _this.datas = _this.table.ajax.json().data;
+                    });
+                },
+                addData( ) {
+                    this.data = {};
+                    this.actionUrl='{{url('catalogs')}}';
+                    this.editStatus=false;
+                    $('#modal-default').modal();
+                },
+                editData(event, row) {
+                    this.data = this.datas[row];
+                    this.editStatus=true;
+                    $('#modal-default').modal();
+                },
+                deleteData(event, id) {
+                    if(confirm("Are you sure?")){
+                        // $(event.target).parents('tr').remove();
+                        axios.post(this.actionUrl+'/'+id, {_method:'DELETE'}).then(response => {
+                            alert('Data has been removed');
+                        });
+                    }
+                },
+                SubmitForm(event, id){
+                    event.preventDefault();
+                    const _this = this;
+                    var actionUrl = ! this.editStatus ? this.actionUrl : this.actionUrl+'/'+id;
+                    axios.post(actionUrl, new FormData($(event.target)[0])).then(response => {
+                        $('#modal-default').modal('hide');
+                        _this.table.ajax.reload();
+                    });
+                },
+            }
+        });
     </script>
-    <script src="{{ asset('js/data.js') }}"></script>
+     <!-- <script src="{{ asset('js/data.js') }}"></script> -->
+        <script type="text/javascript">
+            $('select[name=gender]').on('change',function(){
+                gender = $('select[name=gender]').val();
+
+                if (gender == 0){
+                    controller.table.ajax.url(actionUrl).load();
+                }
+                else {
+                    controller.table.ajax.url(actionUrl+'?gender='+gender).load();
+                }
+            });
+        </script>
+    <!-- <script src="{{ asset('js/data.js') }}"></script> -->
 
 @endsection
 

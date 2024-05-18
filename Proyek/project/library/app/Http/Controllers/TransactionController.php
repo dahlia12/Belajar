@@ -13,31 +13,31 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     public function index()
     {
-        
+        $transactions = Transaction::all();
 
         //return $transactions;
-        return view('admin.transaction');
+        return view('admin.transaction', compact('transactions'));
     }
 
     public function api()
     {
         $transactions = Transaction :: with(['member', 'transactiondetail'])->get();
         foreach ($transactions as $transaction) {
-            if($transaction -> transactiondetail -> book == null){
-                dd($transaction->transactiondetail);
-            }
+            // if($transaction -> transactiondetail -> book == null){
+            //     dd($transaction->transactiondetail);
+            // }
             $transaction["name"] = $transaction -> member -> name;
             $transaction["lama"] = $transaction -> lama;
             $transaction["qty"] = $transaction -> transactiondetail -> qty;
             $transaction["total"] = $transaction -> transactiondetail -> book -> price;
         }
-        $datatables = datatables()->of($transactions)->addIndexColoum();
+        $datatables = datatables()->of($transactions)->addIndexColumn();
 
         return $datatables ->make(true);
     }
@@ -61,11 +61,12 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'id_transaction'  =>['required'],
-            'name'  =>['required'],
-            'email'  =>['required'],
-            'phone_number'  =>['required'],
-            'address'  =>['required'],
+            'tanggal_pinjam'  =>['required'],
+            'tanggal_kembali'  =>['required'],
+            'nama'  =>['required'],
+            'hari'  =>['required'],
+            'total_buku'  =>['required'],
+            'total_bayar'  =>['required'],
         ]);
         // // $transaction = new transaction;
         // // $transaction ->id_transaction =$request ->id_transaction;
@@ -101,7 +102,7 @@ class TransactionController extends Controller
         ->where('id', $id)
         ->first();
 
-        return view('admin.transaction.edit', compact('transactions'));
+        return view('admin.edit', compact('transactions'));
     }
 
     /**
@@ -114,11 +115,12 @@ class TransactionController extends Controller
     public function update(Request $request, Transaction $transaction)
     {
         $this->validate($request,[
-            'id_transaction'  =>['required'],
-            'name'  =>['required'],
-            'email'  =>['required'],
-            'phone_number'  =>['required'],
-            'address'  =>['required'],
+            'tanggal_pinjam'  =>['required'],
+            'tanggal_kembali'  =>['required'],
+            'nama'  =>['required'],
+            'hari'  =>['required'],
+            'total_buku'  =>['required'],
+            'total_bayar'  =>['required'],
         ]);
 
         $transaction->update( $request->all());

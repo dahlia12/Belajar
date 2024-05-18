@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     use HasFactory;
-    protected $label = ['id','id_transaction','member_id','date_start','date_end'];
+    protected $label = ['id_transaction','member_id','date_start','date_end'];
 
     public function member()
     {
@@ -21,6 +21,6 @@ class Transaction extends Model
     }
     public function transactiondetails()
     {
-        return $this->hasMany('App\Models\Transactiondetail','transaction_id')->with('book');
+        return $this->hasMany(TransactionDetail::class)->with('book');
     }
 }

@@ -19,15 +19,15 @@ class MemberController extends Controller
     // }
     public function index(Request $request)
     {
-        // if ($request->gender){
-        //     $datas = Member::where('gender',$request->gender)->get();
-        // }else{
-        //     $datas = Member::all();
-        // }
-        // $datatable = datatables()->of($datas)->addIndexColoumn();
+        if ($request->gender){
+            $datas = Member::where('gender',$request->gender)->get();
+        }else{
+            $datas = Member::all();
+        }
+        $datatable = datatables()->of($datas)->addIndexColumn();
 
-        // return $datatable->make(true);
-        return view('admin.member',compact ('members'));
+        //return $datatable->make(true);
+        return view('admin.member');
     }
 
     public function api()

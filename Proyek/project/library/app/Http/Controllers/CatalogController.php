@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class CatalogController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -32,8 +32,8 @@ class CatalogController extends Controller
     {
         $catalogs = Catalog :: all();
 
-        // foreach ($Catalogs as $key => $Catalog){
-        //     $Catalog->date = convert_date($Catalog->created_at);
+        // foreach ($catalogs as $key => $catalog){
+        //     $catalog->date = convert_date($catalog->created_at);
 
         // }
 

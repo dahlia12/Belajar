@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     use HasFactory;
-    protected $fillabel = ['id','id_publisher','name','email','phone_number','address'];
+    protected $fillabel = ['id_publisher','name','email','phone_number','address'];
 
     public function books()
     {
-        return $this->hasMany('App\Models\Book','publisher_id');
+        return $this->hasMany(Book::class);
     }
 }

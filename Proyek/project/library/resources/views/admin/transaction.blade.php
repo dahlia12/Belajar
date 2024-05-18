@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 @section('header','Transaction')
 
+@push('css')
+<style type="text/css">
+
+</style>
+@endpush
 
 @section('css')
     <!-- DataTables -->
@@ -15,19 +20,29 @@
     <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-10">
-                        <a href="#" @click ="addData()" class="btn btn-sm btn-primary pull-right">Create New Transaction</a>
+                    <div class="col-md-8">
+                        <a href="#" @click ="addData()" class="btn btn-sm btn-primary pull-right">Create New Member</a>
                     </div>
-                    <div class="col-md-2">
-                        <select class="form-control" name="gender">
-                            <option value="0">Semua Jenis Kelamin</option>
-                            <option value="P">Perempuan</option>
-                            <option value="L">Laki-laki</option>
-                        </select>
-                    </div>
+                    <form>
+                        <div class="form-group row  pull-right">
+                            <div class="col-md-6">
+                                <select class="form-control" name="status">
+                                    <option value="0">Status</option>
+                                    <option value="S">Sudah dikembalikan</option>
+                                    <option value="B">Belum dikembalikan</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control" name="status">
+                                    <option value="0">Tanggal</option>
+                                    <option value="TP">Tanggal Pinjam</option>
+                                    <option value="TK">Tanggal Kembali</option>
+                                </select>
+                            </div>    
+                        </div>
+                    </form>
                 </div>
-            </div>
-            <div class="card-body" >
+                <div class="card-body" >
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -39,7 +54,9 @@
                                 <th class="text-center">Total Buku</th>
                                 <th class="text-right">Total Bayar</th>
                                 <th class="text-right">Status</th>
+                                <th class="text-right">Action</th>
                             </tr>
+
                         </thead>
                     </table>
                 </div>
@@ -48,14 +65,14 @@
     </div>
 </div>
 
+
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
         <form method="post" :action="actionUrl" autocomplete="off" @submit="submitForm($event, data.id)">
                     <div class="modal-header">
 
-                        <h4 class="modal-title">transaction</h4>
-
+                        <h4 class="modal-title">Tambah/Edit Anggota</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -66,20 +83,50 @@
 
                         <input type="hidden" name="_method" value="PUT" v-if="editStatus">
 
-                        <div class="form-group">
-                            <label>ID Transaction</label>
-                            <input type="text" class="form-control" name="id_transaction" :value="data.id_transaction" required="">
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Anggota</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="member" :value="data.member" required="" >
+                            </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label>Publisher</label>
-                            <select name="publisher_id" class="form-control" required="required">
-                                @foreach($publisher as $publishers)
-                            <option :selected="book.publisher.id == {{$publisher.id}}" value="{{$publisher->id}}">{{$publisher->name}}</option>
-                                @endforeach
-                            </select>  
+                        <div class="mb-3">
+                            <div class="row g-3 align-items-center">
+                                <div class="col-auto">
+                                    <label class="col-sm-1 col-form-label">Tanggal</label>
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" class="form-control" name="date_start" :value="data.date_start" required="">
+                                </div>
+                                <div class="col-auto">
+                                    <input type="date" class="form-control" name="date_end" :value="data.date_end" required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Buku</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="book" :value="data.isbn" required="">
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-2 col-form-label">Status</label>
+                            <div class="form group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            Sudah dikembalikan
+                                        </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                        <label class="form-check-label" for="flexRadioDefault2">
+                                            Belum dikembalikan
+                                        </label>
+                            </div>
                         </div>
 
+                        
+                        </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-primary">Save changes</button>
@@ -133,7 +180,8 @@
         var apiUrl='{{url('api/transactions')}}';
 
         var columns = [
-            {data: 'id', class: 'text-center', orderable: true},
+            {data: 'DT_RowIndex', class: 'text-center', orderable: true},
+            {data: 'date_start', class: 'text-center', orderable: true},
             {data: 'date_end', class: 'text-center', orderable: true},
             {data: 'name', class: 'text-center', orderable: true},
             {data: 'lama', class: 'text-center', orderable: true},
@@ -150,7 +198,6 @@
                 </a>`;
             }, orderable: false, width: '200px', class: 'text-center'},
         ];
-
         var controller = new Vue({
             el:'#controller',
             data:{
@@ -164,8 +211,8 @@
             mounted: function () {
                 this.datatable();
             },
-                methods:{
-                    datatable() {
+            methods:{
+                datatable() {
                     const _this = this;
                     _this.table = $('#datatable').DataTable({
                         ajax: {
@@ -175,10 +222,11 @@
                         columns:columns
                     }).on('xhr', function () {
                         _this.datas = _this.table.ajax.json().data;
-                        });
-                    },
+                    });
+                },
                 addData( ) {
                     this.data = {};
+                    this.actionUrl='{{url('transactions')}}';
                     this.editStatus=false;
                     $('#modal-default').modal();
                 },
@@ -207,6 +255,32 @@
             }
         });
     </script>
+    
+        <script type="text/javascript">
+            $('select[name=status]').on('change',function(){
+                status = $('select[name=status]').val();
+
+                if (status == 0){
+                    controller.table.ajax.url(actionUrl).load();
+                }
+                else {
+                    controller.table.ajax.url(actionUrl+'?status='+status).load();
+                }
+            });
+
+            $('select[name=tanggal]').on('change',function(){
+                tanggal = $('select[name=tanggal]').val();
+
+                if (tanggal == 0){
+                    controller.table.ajax.url(actionUrl).load();
+                }
+                else {
+                    controller.table.ajax.url(actionUrl+'?tanggal='+tanggal).load();
+                }
+            }); 
+        </script>
+
+         
     <!-- <script src="{{ asset('js/data.js') }}"></script> -->
 
 @endsection

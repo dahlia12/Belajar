@@ -21,7 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('home',[App\Http\Controllers\BookController::class, 'api']);
 Route::get('books',[App\Http\Controllers\BookController::class, 'api']);
 Route::get('authors',[App\Http\Controllers\AuthorController::class, 'api']);
+Route::get('catalogs',[App\Http\Controllers\CatalogController::class, 'api']);
 Route::get('publishers',[App\Http\Controllers\PublisherController::class, 'api']);
-Route::get('taransactions',[App\Http\Controllers\TransactionController::class,'api']);
-Route::get('taransactiondetails',[App\Http\Controllers\TransactionDetailController::class,'api']);
+Route::get('transactions',[App\Http\Controllers\TransactionController::class,'api']);
+Route::get('transactiondetails',[App\Http\Controllers\TransactionDetailController::class,'api']);
 Route::get('members',[App\Http\Controllers\MemberController::class, 'api']);

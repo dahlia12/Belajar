@@ -144,7 +144,7 @@
         var apiUrl='{{url('api/publishers')}}';
 
         var columns = [
-            {data: 'id', class: 'text-center', orderable: true},
+            {data: 'DT_RowIndex', class: 'text-center', orderable: true},
             {data: 'id_publisher', class: 'text-center', orderable: true},
             {data: 'name', class: 'text-center', orderable: true},
             {data: 'email', class: 'text-center', orderable: true},
