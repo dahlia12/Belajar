@@ -21,9 +21,9 @@ class CatalogController extends Controller
     {
         
         $catalogs = Catalog::all();
-
+        $notifs = Controller::getNotif();
         //return $Catalogs;
-        return view('admin.catalog', compact('catalogs'));
+        return view('admin.catalog', compact('catalogs','notifs'));
 
 
     }

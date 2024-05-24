@@ -20,9 +20,9 @@ class PublisherController extends Controller
     public function index()
     {
         $publishers = Publisher::all();
-
+        $notifs = Controller::getNotif();
         //return $publishers;
-        return view('admin.publisher', compact('publishers'));
+        return view('admin.publisher', compact('publishers','notifs'));
     }
 
     public function api()

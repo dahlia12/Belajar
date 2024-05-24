@@ -16,6 +16,7 @@ class HomeController extends Controller
 
     public function index()
     {
+        $notifs = $this->getNotif();
         $total_member = Member::count();
         $total_book = Book::count();
         $total_transaction = Transaction::whereMonth('date_start', date('m'))->count();
@@ -44,7 +45,7 @@ class HomeController extends Controller
             $data_bar[$key]['data'] =$data_month;
         }
         //return $data_bar;
-        return view('home', compact('total_book', 'total_member', 'total_transaction', 'total_publisher','data_donut', 'label_donut','data_bar'));
+        return view('home', compact('notifs','total_book', 'total_member', 'total_transaction', 'total_publisher','data_donut', 'label_donut','data_bar'));
 
     }
     public function Catalog()

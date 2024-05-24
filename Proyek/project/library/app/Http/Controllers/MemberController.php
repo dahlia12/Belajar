@@ -19,6 +19,7 @@ class MemberController extends Controller
     // }
     public function index(Request $request)
     {
+        $notifs = Controller::getNotif();
         if ($request->gender){
             $datas = Member::where('gender',$request->gender)->get();
         }else{
@@ -27,7 +28,7 @@ class MemberController extends Controller
         $datatable = datatables()->of($datas)->addIndexColumn();
 
         //return $datatable->make(true);
-        return view('admin.member');
+        return view('admin.member',compact('notifs'));
     }
 
     public function api()
@@ -50,6 +51,7 @@ class MemberController extends Controller
      */
     public function create()
     {
+
         return view('admin.member.create');
     }
 

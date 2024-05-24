@@ -23,9 +23,9 @@ class TransactionController extends Controller
     public function index()
     {
         $transactions = Transaction::all();
-
+        $notifs = Controller::getNotif();
         //return $transactions;
-        return view('admin.transaction', compact('transactions'));
+        return view('admin.transaction', compact('transactions','notifs'));
     }
 
     public function api()
@@ -56,9 +56,10 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $notifs = Controller::getNotif();
         $members=Member::all();
         $books=Book::all();
-        return view('admin.create',['members'=>$members,'books'=>$books]);
+        return view('admin.create',['members'=>$members,'books'=>$books,'notifs'=>$notifs]);
     }
 
     /**
@@ -118,11 +119,12 @@ class TransactionController extends Controller
     public function edit($id)
     { 
         //dd("hallo");
+        $notifs = Controller::getNotif();
         $transaction = Transaction::with('transactiondetails')->find($id);
         $members=Member::all();
         $books=Book::all();
 
-        return view('admin.edit', compact('transaction','members','books'));
+        return view('admin.edit', compact('transaction','members','books','notifs'));
     }
 
     /**

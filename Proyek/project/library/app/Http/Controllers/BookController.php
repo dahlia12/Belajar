@@ -26,12 +26,12 @@ class BookController extends Controller
         // $publishers = Publisher::get(); 
         // $authors = Author::get();
         // $catalogs = Catalog ::get();
-
+        $notifs = Controller::getNotif();
             $publishers = Publisher::all();
             $authors = Author::all();
             $catalogs = Catalog::all();
 
-            return view('admin.book', compact('publishers', 'authors', 'catalogs'));
+            return view('admin.book', compact('publishers', 'authors', 'catalogs','notifs'));
 
         // return view("admin.book",[
         // "publishers" => $publishers,

@@ -21,9 +21,10 @@ class AuthorController extends Controller
     {
         
         $authors = Author::all();
+        $notifs = $this->getNotif();
 
         //return $authors;
-        return view('admin.author', compact('authors'));
+        return view('admin.author', compact('authors','notifs'));
 
 
     }
